@@ -1,13 +1,12 @@
 import cv2
 import mediapipe as mp
-import requests
 import base64
-import streamlit as st
+from inference_sdk import InferenceHTTPClient
 from dotenv import load_dotenv
 import os
-from inference_sdk import InferenceHTTPClient
 
-load_dotenv()  # Load variables from the .env file
+# Load variables from the .env file
+load_dotenv()
 ROBOFLOW_API_KEY = os.getenv("ROBOFLOW_API_KEY")
 
 # --- Roboflow API Configuration ---
@@ -20,18 +19,12 @@ CLIENT = InferenceHTTPClient(
 mp_face_mesh = mp.solutions.face_mesh
 face_mesh = mp_face_mesh.FaceMesh(refine_landmarks=True)
 
-st.title("Pomodoro Timer: Begin Working")
-
-frame_placeholder = st.empty()
-
-stop_button_pressed = st.button('Stop')
-
 def detect_objects(frame):
-    _, buffer = cv2.imencode('.jpg', frame)  # Encode frame as JPEG
-    encoded_image = base64.b64encode(buffer).decode('utf-8')  # Convert to base64 string
-    
-    result = CLIENT.infer(encoded_image, model_id="coco/3")  # Use your model ID
-    
+    """Detect objects in the frame using Roboflow API."""
+    _, buffer = cv2.imencode('.jpg', frame)
+    encoded_image = base64.b64encode(buffer).decode('utf-8')
+    result = CLIENT.infer(encoded_image, model_id="coco/3")
+
     detected_objects = []
     for obj in result["predictions"]:
         label = obj["class"]
@@ -41,10 +34,11 @@ def detect_objects(frame):
         detected_objects.append({"label": label, "bbox": (x1, y1, x2, y2)})
         cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
         cv2.putText(frame, label, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+    
     return detected_objects
 
-# --- Improved Gaze Direction Detection ---
 def get_gaze_direction(face_landmarks):
+    """Calculate gaze direction based on face landmarks."""
     left_eye_outer = face_landmarks.landmark[33]
     left_eye_inner = face_landmarks.landmark[133]
     left_pupil = face_landmarks.landmark[468]
@@ -57,6 +51,7 @@ def get_gaze_direction(face_landmarks):
     right_eye_bottom = face_landmarks.landmark[386]
     right_eye_top = face_landmarks.landmark[159]
 
+    # Calculate pupil offsets
     left_eye_width = abs(left_eye_inner.x - left_eye_outer.x)
     right_eye_width = abs(right_eye_inner.x - right_eye_outer.x)
 
@@ -69,6 +64,7 @@ def get_gaze_direction(face_landmarks):
     gaze_offset_x = (left_pupil_offset_x + right_pupil_offset_x) / 2
     gaze_offset_y = (left_pupil_offset_y + right_pupil_offset_y) / 2
 
+    # Gaze direction logic
     down_threshold = 0.02
     up_threshold = -0.06
 
@@ -84,6 +80,7 @@ def get_gaze_direction(face_landmarks):
         return "Looking Center"
 
 def check_distraction(gaze_direction, objects):
+    """Check if the user is distracted based on gaze and object presence."""
     phone_present = any(obj["label"] == "cell phone" for obj in objects)
     notebook_present = any(obj["label"] == "notebook" for obj in objects)
 
@@ -96,39 +93,37 @@ def check_distraction(gaze_direction, objects):
     else:
         return "FOCUSED"
 
-# --- Webcam Feed Processing ---
-cap = cv2.VideoCapture(0)
+def generate_frames():
+    cap = cv2.VideoCapture(0)
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
 
-while cap.isOpened() and not stop_button_pressed:
-    ret, frame = cap.read()
-    if not ret:
-        break
+        frame = cv2.flip(frame, 1)
+        rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        
+        # Process face landmarks
+        results = face_mesh.process(rgb_frame)
+        detected_objects = detect_objects(frame)
 
-    frame = cv2.flip(frame, 1)
-    rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    frame_placeholder.image(frame, channels='RGB')
-    results = face_mesh.process(rgb_frame)
+        if results.multi_face_landmarks:
+            for face_landmarks in results.multi_face_landmarks:
+                gaze_direction = get_gaze_direction(face_landmarks)
+                distraction_status = check_distraction(gaze_direction, detected_objects)
 
-    detected_objects = detect_objects(frame)
+                # Display gaze direction and distraction status
+                cv2.putText(frame, f"Gaze: {gaze_direction}", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+                cv2.putText(frame, f"Status: {distraction_status}", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
 
-    if results.multi_face_landmarks:
-        for face_landmarks in results.multi_face_landmarks:
-            gaze_direction = get_gaze_direction(face_landmarks)
-            distraction_status = check_distraction(gaze_direction, detected_objects)
+        # Encode frame as JPEG
+        ret, buffer = cv2.imencode('.jpg', frame)
+        if not ret:
+            continue
+        frame = buffer.tobytes()
 
-            cv2.putText(frame, f"Gaze: {gaze_direction}", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-            cv2.putText(frame, f"Status: {distraction_status}", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+        # Yield frame in a format suitable for streaming
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
-    # Display the frame
-    cv2.imshow("Distraction Detection", frame)
-
-    # Handle ESC key press to stop
-    key = cv2.waitKey(1) & 0xFF
-    if key == 27:  # ESC key to exit
-        break
-    elif cv2.getWindowProperty("Distraction Detection", cv2.WND_PROP_VISIBLE) < 1:
-        break
-
-# Release resources
-cap.release()
-cv2.destroyAllWindows()
+    cap.release()

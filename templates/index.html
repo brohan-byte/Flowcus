@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distraction Detection</title>
+    <style>
+        /* Basic Page Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to bottom right, #fbc2eb, #a6c1ee); /* Soft gradient background */
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Container for the webcam feed */
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+            max-width: 80%; /* Ensure the container is not too wide */
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        /* Centering the webcam feed */
+        .video-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;  /* Give some space between the title and webcam feed */
+        }
+
+        .video-container img {
+            width: 80%; /* Makes the webcam feed responsive */
+            border-radius: 10px;
+            box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Distraction Detection Stream</h1>
+        <p>Stay focused and check your distraction status as you work!</p>
+        <!-- Centering webcam feed -->
+        <div class="video-container">
+            <img src="{{ url_for('video_feed') }}" alt="Video Feed">
+        </div>
+    </div>
+</body>
+</html>
