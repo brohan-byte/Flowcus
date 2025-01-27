@@ -6,8 +6,9 @@
 1. [Project Overview](#Project-Overview)
 2. [Features](#Features)
 3. [APIs and Technologies](#APIs-and-Technologies)
-4. [Future Plans](#Future-Plans)
-5. [Additional Information](#Additional-Information)
+4. [Development Roadmap](#Development-Roadmap)
+5. [Future Plans](#Future-Plans)
+6. [Additional Information](#Additional-Information)
 
 
 ## 📚 Project Overview
@@ -54,7 +55,7 @@ The project is currently in development and aims to combine the Pomodoro techniq
 
 
 
-## Development Roadmap for Flowcus:
+## Development Roadmap:
 
 ### **1. Researching Technologies & APIs**
 - Conducted research on available computer vision libraries and APIs.
