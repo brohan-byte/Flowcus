@@ -75,7 +75,7 @@ The project is currently in development and aims to combine the Pomodoro techniq
 
 ### **4. Building the Web Application**
 - Developed a **Flask backend** to process real-time video data and send results to the frontend.
-- Created a **React frontend** with a simple UI:
+- Created a with a simple home-page using html to display the app functionality:
   - A landing page with a "Begin Working" button.
   - A workspace with a webcam feed and distraction alerts.
 - Ensured seamless integration between Flask and the frontend.
