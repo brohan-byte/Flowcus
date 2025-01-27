@@ -81,8 +81,7 @@ The project is currently in development and aims to combine the Pomodoro techniq
 - Ensured seamless integration between Flask and the frontend.
 
 ### **5. Deployment & Documentation**
-- Deployed the Flask backend and React frontend.
-- Created a detailed **README** with setup instructions, usage guide, and development roadmap.
+- Deployed the Flask backend and a simple html frontend page.
 - Published the project on **GitHub** for accessibility and future improvements.
 
 
