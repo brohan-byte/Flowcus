@@ -52,6 +52,40 @@ The project is currently in development and aims to combine the Pomodoro techniq
  - ***GazeCloud API***: The GazeCloud API enables real-time eye tracking using a webcam, providing insights into user focus and engagement. It requires no extra hardware and supports applications like UX research, productivity tracking, and accessibility.
  - ***Google MediaPipe***: A powerful framework for real-time face and pose detection. MediaPipe is used for pose estimation to determine whether the user's posture indicates active work or distraction.
 
+
+
+## Development Roadmap for Flowcus:
+
+### **1. Researching Technologies & APIs**
+- Conducted research on available computer vision libraries and APIs.
+- Chose **Roboflow** for object detection and **MediaPipe** for gaze estimation.
+- Selected **Flask** for the backend and **React** for the frontend.
+
+### **2. Object Detection with Roboflow**
+- Trained an object detection model on the **COCO dataset** using Roboflow.
+- Integrated the model into the application using the **Roboflow API**.
+- Tested object detection to ensure accurate identification of distractions like phones.
+
+### **3. Gaze Estimation & Distraction Detection**
+- Integrated **MediaPipe Face Mesh** to track eye movement and gaze direction.
+- Developed logic to determine if the user is looking at their phone or another distraction.
+- Combined object detection with gaze estimation to create a **distraction detection technique**.
+- Validated that the model accurately differentiates between focus and distraction.
+
+### **4. Building the Web Application**
+- Developed a **Flask backend** to process real-time video data and send results to the frontend.
+- Created a **React frontend** with a simple UI:
+  - A landing page with a "Begin Working" button.
+  - A workspace with a webcam feed and distraction alerts.
+- Ensured seamless integration between Flask and the frontend.
+
+### **5. Deployment & Documentation**
+- Deployed the Flask backend and React frontend.
+- Created a detailed **README** with setup instructions, usage guide, and development roadmap.
+- Published the project on **GitHub** for accessibility and future improvements.
+
+
+
 ## Future Plans:
  - Implementing technologies to determine whether the user’s activity on the computer aligns with their tasks. For this project, simply focusing on the screen is considered as working.
  - Gamifying the Pomodoro technique by adding interactive elements, such as a boss health bar that depletes when tasks are completed, encouraging users to stay productive.
