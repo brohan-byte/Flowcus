@@ -60,15 +60,14 @@ The project is currently in development and aims to combine the Pomodoro techniq
 ### **1. Researching Technologies & APIs**
 - Conducted research on available computer vision libraries and APIs.
 - Chose **Roboflow** for object detection and **MediaPipe** for gaze estimation.
-- Selected **Flask** for the backend and **React** for the frontend.
+- Selected **Flask** for the backend.
 
 ### **2. Object Detection with Roboflow**
-- Trained an object detection model on the **COCO dataset** using Roboflow.
-- Integrated the model into the application using the **Roboflow API**.
+- Integrated an Object Deteection model trained on the COCO dataset into the application using the **Roboflow API**.
 - Tested object detection to ensure accurate identification of distractions like phones.
 
 ### **3. Gaze Estimation & Distraction Detection**
-- Integrated **MediaPipe Face Mesh** to track eye movement and gaze direction.
+- Integrated **MediaPipe Iris** to track eye movement and gaze direction.
 - Developed logic to determine if the user is looking at their phone or another distraction.
 - Combined object detection with gaze estimation to create a **distraction detection technique**.
 - Validated that the model accurately differentiates between focus and distraction.
