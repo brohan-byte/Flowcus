@@ -86,17 +86,17 @@ The project is currently in development and aims to combine the Pomodoro techniq
 
 
 ## Future Development Roadmap:
- - Task Alignment & Smarter Focus Detection
+###***6. Task Alignment & Smarter Focus Detection*** 
    - Expanding beyond basic gaze tracking by developing a system that analyzes the user’s on-screen activity.
    - Ensuring that simply looking at the screen is not enough— the system will verify whether the user’s active tasks align with their intended work.
    - Exploring integrations with productivity apps and task managers to provide contextual insights on focus and workflow.
   
- - Gamification & User Engagement
+###*** Gamification & User Engagement*** 
    - Enhancing the Pomodoro experience by introducing interactive elements to make productivity more engaging.
    - Implementing a "boss health bar" that depletes as the user completes tasks, rewarding focus and discipline.
    - Potentially adding streak tracking and achievement badges to encourage long-term habit formation.
 
- - Accessibility & Performance Enhancements
+###***Accessibility & Performance Enhancements*** 
    - Introducing voice command functionality to improve accessibility, allowing hands-free interaction with the app.
    - Optimizing real-time processing to reduce latency and enhance responsiveness.
    - Refining distraction detection to work more efficiently across different lighting conditions and camera qualities.
