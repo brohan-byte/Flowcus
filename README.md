@@ -85,11 +85,21 @@ The project is currently in development and aims to combine the Pomodoro techniq
 
 
 
-## Future Plans:
- - Implementing technologies to determine whether the user’s activity on the computer aligns with their tasks. For this project, simply focusing on the screen is considered as working.
- - Gamifying the Pomodoro technique by adding interactive elements, such as a boss health bar that depletes when tasks are completed, encouraging users to stay productive.
- - Enhancing accessibility with voice commands for smoother interaction.
- - Optimizing real-time performance to reduce latency and improve response times.
+## Future Development Roadmap:
+ - Task Alignment & Smarter Focus Detection
+   - Expanding beyond basic gaze tracking by developing a system that analyzes the user’s on-screen activity.
+   - Ensuring that simply looking at the screen is not enough— the system will verify whether the user’s active tasks align with their intended work.
+   - Exploring integrations with productivity apps and task managers to provide contextual insights on focus and workflow.
+  
+ - Gamification & User Engagement
+   - Enhancing the Pomodoro experience by introducing interactive elements to make productivity more engaging.
+   - Implementing a "boss health bar" that depletes as the user completes tasks, rewarding focus and discipline.
+   - Potentially adding streak tracking and achievement badges to encourage long-term habit formation.
+
+ - Accessibility & Performance Enhancements
+   - Introducing voice command functionality to improve accessibility, allowing hands-free interaction with the app.
+   - Optimizing real-time processing to reduce latency and enhance responsiveness.
+   - Refining distraction detection to work more efficiently across different lighting conditions and camera qualities.
 
 ## ℹ️ Additional Information
  - This project is a feasibility study on the TensorFlow Object Detection API and the related technologies as part of the API Study URV program under the mentorship of Mr. Andre Kenneth 'Chase' Randall.
